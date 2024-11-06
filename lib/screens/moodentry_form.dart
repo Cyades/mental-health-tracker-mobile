@@ -9,10 +9,11 @@ class MoodEntryFormPage extends StatefulWidget {
 }
 
 class _MoodEntryFormPageState extends State<MoodEntryFormPage> {
-	final _formKey = GlobalKey<FormState>();
-	String _mood = "";
+  final _formKey = GlobalKey<FormState>();
+  String _mood = "";
 	String _feelings = "";
 	int _moodIntensity = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +25,7 @@ class _MoodEntryFormPageState extends State<MoodEntryFormPage> {
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       drawer: const LeftDrawer(),
       body: Form(
@@ -32,6 +34,29 @@ class _MoodEntryFormPageState extends State<MoodEntryFormPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Mood",
+                    labelText: "Mood",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _mood = value!;
+                    });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Mood tidak boleh kosong!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -87,7 +112,7 @@ class _MoodEntryFormPageState extends State<MoodEntryFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
+                      backgroundColor: WidgetStateProperty.all(
                           Theme.of(context).colorScheme.primary),
                     ),
                     onPressed: () {
@@ -103,7 +128,7 @@ class _MoodEntryFormPageState extends State<MoodEntryFormPage> {
                                   children: [
                                     Text('Mood: $_mood'),
                                     Text('Feelings: $_feelings'),
-                                    Text('Mood Intensity: $_moodIntensity'),
+                                    Text('Mood intensity: $_moodIntensity'),
                                   ],
                                 ),
                               ),
@@ -129,7 +154,7 @@ class _MoodEntryFormPageState extends State<MoodEntryFormPage> {
                 ),
               ),
             ],
-          ),
+          )
         ),
       ),
     );
